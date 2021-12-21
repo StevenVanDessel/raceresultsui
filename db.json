@@ -1,0 +1,25 @@
+{
+    "riders": [
+      {
+        "id": 123,
+        "name": "Briek Van Dessel",
+        "identifier": "BEL20060527",
+        "yearOfBirth": "2006",
+        "province": "VB"
+      },
+      {
+        "id": 456,
+        "name": "Sybren Stockx",
+        "identifier": "BEL20060810",
+        "yearOfBirth": "2006",
+        "province": "VB"        
+      },
+      {
+        "id": 789,
+        "name": "Seppe Geerinck",
+        "identifier": "BEL20060222",
+        "yearOfBirth": "2006",
+        "province": "LIM"
+      }     
+    ]
+  }
