@@ -11,12 +11,12 @@ const apiClient = axios.create({
 
 export default {
   getRiders() {
-    return apiClient.get('/riders')
+    return apiClient.get('/riders');
   },
-  getEvent(id) {
+  getRider(id) {
     return apiClient.get('/riders/' + id)
   },
-  postEvent(rider) { 
+  postRider(rider) { 
     return apiClient.post('/riders', rider)
   }
 }
