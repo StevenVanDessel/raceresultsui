@@ -1,23 +1,23 @@
 <template>
   <div class="home">
-    <RidersList />
+    <RiderList />
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
-import RidersList from "@/components/RidersList.vue";
+import RiderList from "@/components/RiderList.vue";
 
 export default {
   name: "Home",
   components: {
-    RidersList,
+    RiderList,
   },
 };
 </script>
 
 <style>
-div {
-  padding: 25px
+.home {
+  padding: 25px;
 }
 </style>
