@@ -7,7 +7,12 @@
         <tr><th>Name</th><th>Identifier</th><th>Date of Birth</th><th>Province</th></tr>
     </thead>
     <tbody>
-        <tr v-for="rider in riders" v-bind:key="rider.identifier"><td>{{ rider.name }}</td><td>{{ rider.identifier }}</td><td>{{ rider.dateOfBirth }}</td><td>{{ rider.province }}</td></tr>
+        <tr v-for="rider in riders" v-bind:key="rider.identifier">
+          <td><router-link :to="{ name: 'RiderDetail', params: { id: rider.id }}" >{{ rider.name }}</router-link></td>
+          <td>{{ rider.identifier }}</td>
+          <td>{{ rider.dateOfBirth }}</td>
+          <td>{{ rider.province }}</td>
+        </tr>
     </tbody>
 </table>
 <span v-else>No riders listed</span>
