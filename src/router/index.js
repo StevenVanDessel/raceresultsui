@@ -1,11 +1,36 @@
 import { createRouter, createWebHistory } from "vue-router";
 import Home from "../views/Home.vue";
+import RiderDetail from '@/views/RiderDetail.vue'
+import RiderService from '@/services/RiderService.js'
+import store from '@/store';
 
 const routes = [
   {
     path: "/",
     name: "Home",
     component: Home,
+  },
+  {
+    path: "/riders/:id",
+    name: "RiderDetail",
+    component: RiderDetail,
+    beforeEnter: to => {
+      return RiderService.getRider(to.params.id)
+        .then(response => {
+          store.rider = response.data
+          console.log('Set rider in store: ' + store.rider.id + ',' + store.rider.name)
+        })
+        .catch(error => {
+          if (error.response && error.response.status == 404) {
+            return {
+              name: '404Resource',
+              params: { resource: 'rider' }
+            }
+          } else {
+            return { name: 'NetworkError' }
+          }
+        })
+    },
   },
   {
     path: "/about",
