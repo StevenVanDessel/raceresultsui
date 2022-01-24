@@ -1,3 +1,10 @@
+:root {
+  --primary-color: #42b983;
+  --table-default-corner-radius: 6px;
+  --default-border-size: 1px;
+  --default-padding-for-blocks: 25px;
+}
+
 #app {
     font-family: "Open Sans", Avenir, Helvetica, Arial, sans-serif;
     -webkit-font-smoothing: antialiased;
@@ -6,7 +13,7 @@
   }
   
   #nav, #main {
-    padding: 25px;
+    padding: var(--default-padding-for-blocks);
   }
   
   #nav a {
@@ -15,13 +22,13 @@
   }
   
   #nav a.router-link-exact-active {
-    color: #42b983;
+    color: var(--primary-color);
   }
 
   table {
     width: 100%;
     border-spacing: 0;
-    border: 1px;
+    border: var(--default-border-size);
     border-collapse: separate;
   }
 
@@ -31,26 +38,26 @@
   }
 
   th {
-    background-color: #42b983;
+    background-color: var(--primary-color);
     font-weight: normal;
     color: white;
   }
   
   tbody tr td {
-    border-left: 1px solid #42b983;
-    border-bottom: 1px solid #42b983;
+    border-left: var(--default-border-size) solid var(--primary-color);
+    border-bottom: var(--default-border-size) solid var(--primary-color);
   }
 
   tbody tr td:last-child {
-    border-right: 1px solid #42b983;
+    border-right: var(--default-border-size) solid var(--primary-color);
   }
 
   th:first-child {
-    border-radius: 6px 0 0 0;
+    border-radius: var(--table-default-corner-radius) 0 0 0;
     background-clip: border-box;
   }
   
   th:last-child {
-    border-radius: 0 6px 0 0;
+    border-radius: 0 var(--table-default-corner-radius) 0 0;
     background-clip: border-box;
   }
