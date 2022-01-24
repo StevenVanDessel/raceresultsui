@@ -1,5 +1,6 @@
 <template>
-  <div>
+  <div class="home">
+    <h1>Rider Detail</h1>
     <p>Name: {{rider.name}}</p>
     <p>Identifier: {{rider.identifier}}</p>
     <p>yearOfBirth: {{rider.yearOfBirth}}</p>
@@ -24,6 +25,11 @@ export default {
 
 <style>
 .home {
-  padding: 25px;
+  padding: var(--default-padding-for-blocks);
+}
+
+h1 {
+  border-bottom: var(--default-border-size) solid var(--primary-color);
+  margin-bottom: 25px;
 }
 </style>
