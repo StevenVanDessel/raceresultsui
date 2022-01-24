@@ -2,6 +2,8 @@ import { createRouter, createWebHistory } from "vue-router";
 import Home from "../views/Home.vue";
 import RiderDetail from '@/views/RiderDetail.vue'
 import RiderService from '@/services/RiderService.js'
+import NotFound from '@/views/NotFound.vue'
+import NetworkError from '@/views/NetworkError.vue'
 import store from '@/store';
 
 const routes = [
@@ -41,6 +43,22 @@ const routes = [
     component: () =>
       import(/* webpackChunkName: "about" */ "../views/About.vue"),
   },
+  {
+    path: '/:catchAll(.*)',
+    name: 'NotFound',
+    component: NotFound
+  },
+  {
+    path: '/404/:resource',
+    name: '404Resource',
+    component: NotFound,
+    props: true
+  },
+  {
+    path: '/network-error',
+    name: 'NetworkError',
+    component: NetworkError
+  }
 ];
 
 const router = createRouter({
