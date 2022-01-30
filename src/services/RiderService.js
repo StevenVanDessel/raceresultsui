@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 const apiClient = axios.create({
-  baseURL: 'http://localhost:3000',
+  baseURL: 'http://localhost:8080',
   withCredentials: false,
   headers: {
     Accept: 'application/json',
@@ -18,5 +18,8 @@ export default {
   },
   postRider(rider) { 
     return apiClient.post('/riders', rider)
+  },
+  getRidersByNameContaining(text) {
+    return apiClient.get('/riders/byNameContaining?text=' + text)
   }
 }
