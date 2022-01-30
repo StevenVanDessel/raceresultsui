@@ -10,6 +10,7 @@
           id="riderNameFilterInput"
           name="riderNameFilterInput"
         />
+        &nbsp;
         <input
           type="button"
           value="Filter riders"
@@ -55,7 +56,6 @@
         @click="ridersSelected"
         style="float: right"
       />
-      <p style="clear: both">{{ checkedRiderIdentifiers }}</p>
     </div>
     <div v-else><p>No riders to show</p></div>
   </div>
