@@ -1,26 +1,31 @@
 <template>
-<h1>Rider Overview</h1>
-
-<div id="riderOverview" v-if="error == null">
-<table id="riderTable" v-if="riders != null && riders.length">
-    <thead>
-        <tr><th>Name</th><th>Identifier</th><th>Date of Birth</th><th>Province</th></tr>
-    </thead>
-    <tbody>
-        <tr v-for="rider in riders" v-bind:key="rider.identifier">
-          <td><router-link :to="{ name: 'RiderDetail', params: { id: rider.id }}" >{{ rider.name }}</router-link></td>
-          <td>{{ rider.identifier }}</td>
-          <td>{{ rider.dateOfBirth }}</td>
-          <td>{{ rider.province }}</td>
-        </tr>
-    </tbody>
-</table>
-<span v-else>No riders listed</span>
-</div>
-<div v-else>
-  <h2>Oops. An issue was encountered when trying to fetch the riders. Please try again later.</h2>
-  <p>The error was {{ error }}</p>
-</div>
+  <h1>{{ title }}</h1>
+  <div id="riderOverview" v-if="error == null">
+    <div v-if="riders != null && riders.length">
+      <p>Rider name contains <input type="text" v-model="riderNameFilterInput" id="riderNameFilterInput" name="riderNameFilterInput"> <input type="button" value="Filter riders" v-on:click="filterRidersOnName"></p>
+      <table id="riderTable">
+          <thead>
+              <tr><th v-if="selectionModeOn">&nbsp;</th><th>Name</th><th>Identifier</th><th>Year of Birth</th><th>Province</th></tr>
+          </thead>
+          <tbody>
+              <tr v-for="rider in riders" v-bind:key="rider.identifier">
+                <td v-if="selectionModeOn" style="text-align: center"><input type="checkbox" :id="rider.identifier" :value="rider.identifier" v-model="checkedRiderIdentifiers" /></td>
+                <td><router-link :to="{ name: 'RiderDetail', params: { id: rider.id }}" >{{ rider.name }}</router-link></td>
+                <td>{{ rider.identifier }}</td>
+                <td>{{ rider.yearOfBirth }}</td>
+                <td>{{ rider.province }}</td>
+              </tr>
+          </tbody>
+      </table>
+      <input type="button" v-if="selectionModeOn" value="Select" style="float: right"/>
+      <p style="clear: both"> {{ checkedRiderIdentifiers }}</p>
+    </div>
+    <div v-else><p>No riders to show</p></div>
+  </div>
+  <div v-else>
+    <h2>Oops. An issue was encountered when trying to fetch the riders. Please try again later.</h2>
+    <p>The error was {{ error }}</p>
+  </div>
 </template>
 
 <script>
@@ -28,23 +33,42 @@ export default {
   name: 'RiderList',
   data() {
     return {
-      error: null
+      error: null,
+      riderNameFilterInput: null,
+      checkedRiderIdentifiers: [],
+    }
+  },
+  props : {
+    riders: {
+      type: Array,
+      required: true,
+    },
+    selectionModeOn: {
+      type: Boolean,
+      required: false,
+      default: false,
+    },
+    title: {
+      type: String,
+      required: false,
+      default: "Rider Overview",
     }
   },
   created() {
-    this.$store.dispatch('fetchRiders')
-    .catch(error => {
-      this.error = error
-    })
   },
   computed: {
-    riders() {
-      return this.$store.state.riders
-    }
+  },
+  methods: {
+    filterRidersOnName() {
+      this.$store.dispatch('fetchRidersByNameContaining', this.riderNameFilterInput)
+      .catch(error => {
+        this.error = error
+      })
+    },
+    
   }
 }
 </script>
 
 <style>
-
 </style>
