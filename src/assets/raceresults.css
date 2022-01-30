@@ -61,3 +61,7 @@
     border-radius: 0 var(--table-default-corner-radius) 0 0;
     background-clip: border-box;
   }
+
+  input {
+    margin-top: 5px;
+  }
