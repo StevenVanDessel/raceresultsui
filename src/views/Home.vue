@@ -4,11 +4,15 @@
       v-bind:riders="availableRiders"
       title="Known riders"
       selectionModeOn
-      @filterRidersByNameContaining="filterRidersByNameContaining"
+      @filterRidersByNameContaining="filterAvailableRidersByNameContaining"
       @ridersSelected="ridersSelected"
     />
     <p>&nbsp;</p>
-    <RiderList v-bind:riders="filteredSelectedRiders" title="Selected riders" />
+    <RiderList
+      v-bind:riders="filteredSelectedRiders"
+      title="Selected riders"
+      @filterRidersByNameContaining="filterSelectedRidersByNameContaining"
+    />
   </div>
 </template>
 
@@ -33,24 +37,27 @@ export default {
     },
     filteredSelectedRiders() {
       if (
-        this.selectedRIdersFilterText == null ||
+        this.selectedRidersFilterText == null ||
         this.selectedRidersFilterText == ""
       ) {
         return this.selectedRiders;
       } else {
         return this.selectedRiders.filter((element) => {
-          return element.name.contains(this.selectedRidersFilterText);
+          return element.name.includes(this.selectedRidersFilterText);
         });
       }
     },
   },
   methods: {
-    filterRidersByNameContaining(event) {
+    filterAvailableRidersByNameContaining(event) {
       this.$store
         .dispatch("fetchRidersByNameContaining", event.text)
         .catch((error) => {
           this.error = error;
         });
+    },
+    filterSelectedRidersByNameContaining(event) {
+      this.selectedRidersFilterText = event.text;
     },
     ridersSelected(event) {
       for (let identifier of event.ridersSelected) {
