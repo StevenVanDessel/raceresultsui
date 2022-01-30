@@ -1,37 +1,42 @@
 import { createRouter, createWebHistory } from "vue-router";
 import Home from "../views/Home.vue";
-import RiderDetail from '@/views/RiderDetail.vue'
-import RiderService from '@/services/RiderService.js'
-import NotFound from '@/views/NotFound.vue'
-import NetworkError from '@/views/NetworkError.vue'
-import store from '@/store';
+import RiderDetail from "@/views/RiderDetail.vue";
+import RiderService from "@/services/RiderService.js";
+import NotFound from "@/views/NotFound.vue";
+import NetworkError from "@/views/NetworkError.vue";
+import store from "@/store";
 
 const routes = [
   {
     path: "/",
     name: "Home",
     component: Home,
+    beforeEnter: () => {
+      return store.dispatch("fetchRiders");
+    },
   },
   {
     path: "/riders/:id",
     name: "RiderDetail",
     component: RiderDetail,
-    beforeEnter: to => {
+    beforeEnter: (to) => {
       return RiderService.getRider(to.params.id)
-        .then(response => {
-          store.rider = response.data
-          console.log('Set rider in store: ' + store.rider.id + ',' + store.rider.name)
+        .then((response) => {
+          store.rider = response.data;
+          console.log(
+            "Set rider in store: " + store.rider.id + "," + store.rider.name
+          );
         })
-        .catch(error => {
+        .catch((error) => {
           if (error.response && error.response.status == 404) {
             return {
-              name: '404Resource',
-              params: { resource: 'rider' }
-            }
+              name: "404Resource",
+              params: { resource: "rider" },
+            };
           } else {
-            return { name: 'NetworkError' }
+            return { name: "NetworkError" };
           }
-        })
+        });
     },
   },
   {
@@ -44,21 +49,21 @@ const routes = [
       import(/* webpackChunkName: "about" */ "../views/About.vue"),
   },
   {
-    path: '/:catchAll(.*)',
-    name: 'NotFound',
-    component: NotFound
-  },
-  {
-    path: '/404/:resource',
-    name: '404Resource',
+    path: "/:catchAll(.*)",
+    name: "NotFound",
     component: NotFound,
-    props: true
   },
   {
-    path: '/network-error',
-    name: 'NetworkError',
-    component: NetworkError
-  }
+    path: "/404/:resource",
+    name: "404Resource",
+    component: NotFound,
+    props: true,
+  },
+  {
+    path: "/network-error",
+    name: "NetworkError",
+    component: NetworkError,
+  },
 ];
 
 const router = createRouter({
